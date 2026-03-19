@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///C:/Users/Administrator/Documents/Ishtar/Web/Index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Local Concerts | Ishtar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /*
+         * CSS Variables for theme colors and shadow
+         * --primary: Main accent color
+         * --accent: Secondary accent color
+         * --bg: Background color
+         * --card-bg: Card background color
+         * --text: Main text color
+         * --shadow: Box shadow for cards and header
+         */
+        :root {
+            --primary: #667eea; /* Modern blue */
+            --accent: #764ba2;  /* Purple accent */
+            --bg: #0f5f74; /* White background */
+            --card-bg: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+            --text: #2d3748;    /* Dark gray text */
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+            --border-radius: 16px;
+        }
+
+        /*
+         * Body styles: font, background, and text color
+         */
+        body {
+            margin: 0;
+            font-family: 'Poppins', 'Segoe UI', 'Roboto', Arial, sans-serif;
+            background: var(--bg);
+            background-size: 400% 400%;
+            color: var(--text);
+            min-height: 100vh;
+            background-attachment: fixed;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('file:///C:/Users/260075/Desktop/Ishtar/png.jpg');
+            background-size: auto;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.4;  /* Adjust for visibility (0.0 to 1.0) */
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /*
+         * Header styles: gradient background, text alignment, and shadow
+         */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #280555;
+            padding: 3rem 0 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23ffffff" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3.2rem;
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        header p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: var(--shadow);
+            }
+            50% {
+                box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2), 0 0 30px rgba(118, 75, 162, 0.1);
+            }
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /*
+         * Events grid container
+         */
+        .events-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            padding: 0 2rem;
+        }
+
+        /*
+         * Section titles
+         */
+        section h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #064453;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            position: relative;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        section h2:nth-of-type(2) {
+            animation: slideInRight 0.8s ease-out;
+        }
+        section h2::before {
+            content: attr(data-icon);
+            display: inline-block;
+            margin-right: 0.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 0.5rem auto;
+            border-radius: 2px;
+            animation: slideInLeft 1s ease-out 0.5s both;
+        }
+
+        /*
+         * Event card styles
+         */
+        .event-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .event-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /*
+         * Event image styles
+         */
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .event-card:hover .event-image {
+            transform: scale(1.05);
+        }
+
+        /*
+         * Event content and text styles
+         */
+        .event-content {
+            padding: 1.8rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.7rem 0;
+            color: var(--primary);
+            line-height: 1.3;
+        }
+        .event-date {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        .event-date::before {
+            content: '📅';
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+            animation: float 4s ease-in-out infinite;
+        }
+        .event-desc {
+            flex: 1;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /*
+         * Event action button styles
+         */
+        .event-action {
+            align-self: flex-start;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #0a1570;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .event-action::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .event-action:hover::before {
+            left: 100%;
+        }
+        .event-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /*
+         * Input and form element styles
+         */
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--text);
+            background: var(--card-bg);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+        input::placeholder, textarea::placeholder {
+            color: rgba(45, 55, 72, 0.6);
+            font-style: italic;
+            transition: color 0.3s ease;
+        }
+        input:focus::placeholder, textarea:focus::placeholder {
+            color: rgba(45, 55, 72, 0.3);
+        }
+
+        /*
+         * Responsive styles for mobile
+         */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            header p { font-size: 1.1rem; }
+            .events-container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+                gap: 2rem;
+            }
+            section h2 { font-size: 1.8rem; }
+            .event-content { padding: 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 2rem; }
+            .event-title { font-size: 1.3rem; }
+            .event-action { padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PNG Music and Culture Hub</h1>
+        <p>Discover and join our latest local concerts across Papua New Guinea. This platform boosts the national economy by promoting tourism, supporting local artists, creating jobs in the entertainment sector, and fostering cultural exchange that drives community development and economic growth.</p>
+    </header>
+    <main>
+            <section>
+                <h2 data-icon="">Local Concerts in PNG</h2>
+                <div class="events-container">
+                        
+                 <div class="event-card">
+                        <img class="pom.jpg" src="C:\Users\260075\Desktop\Ishtar\Web\pom.jpg" alt="Port Moresby Concert">
+                        <div class="event-content">
+                            <div class="event-title">PNG Music Festival</div>
+                            <div class="event-date">June 15, 2027 | Port Moresby, PNG</div>
+                            <div class="event-desc">
+                                A spectacular showcase of local talent featuring reggae, old hits, and traditional PNG music in the heart of the capital.
+                            </div>
+                            <a href="file:///C:/Users/Administrator/Documents/Ishtar/Web/Index.html#" class="event-action">Get Tickets</a>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <img class="morobe.jpg" src="C:\Users\260075\Desktop\Ishtar\Web\morobe.jpg" alt="Lae Concert">
+                        <div class="event-content">
+                            <div class="event-title">Morobe Music Night</div>
+                            <div class="event-date">July 20, 2027 | Lae, PNG</div>
+                            <div class="event-desc">
+                                Experience the vibrant music scene of Morobe Province with live performances from regional artists and emerging talents.
+                            </div>
+                            <a href="file:///C:/Users/Administrator/Documents/Ishtar/Web/Index.html#" class="event-action">Register</a>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <img class="hiri.jpg" src="C:\Users\260075\Desktop\Ishtar\Web\hiri.jpg" alt="Hiri Concert">
+                        <div class="event-content">
+                            <div class="event-title">Coastal Rhythms</div>
+                            <div class="event-date">August 10, 2027 | Hanua Bada, PNG</div>
+                            <div class="event-desc">
+                                A beachside festival celebrating coastal music traditions with stunning ocean views and unforgettable canoe racing and cultural performances.
+                            </div>
+                            <a href="file:///C:/Users/Administrator/Documents/Ishtar/Web/Index.html#" class="event-action">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <img class="ENB.jpg" src="C:\Users\260075\Desktop\Ishtar\Web\ENB.jpg" alt="Kokopo Concert">
+                        <div class="event-content">
+                            <div class="event-title">Volcano Fest</div>
+                            <div class="event-date">September 5, 2027 | Kokopo, PNG</div>
+                            <div class="event-desc">
+                                A unique festival set against the backdrop of a volcano, featuring amazing traditional melodies and island rhythms.
+                            </div>
+                            <a href="file:///C:/Users/Administrator/Documents/Ishtar/Web/Index.html#" class="event-action">Get Tickets</a>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <img class="highlands.jpg" src="C:\Users\260075\Desktop\Ishtar\Web\highlands.jpg" alt="Mt Hagen Concert">
+                        <div class="event-content">
+                            <div class="event-title">Highlands Harmony</div>
+                            <div class="event-date">October 12, 2027 | Mt Hagen, PNG</div>
+                            <div class="event-desc">
+                                Celebrate the rich musical heritage of the highlands with traditional instruments and contemporary fusion performances.
+                            </div>
+                            <a href="file:///C:/Users/Administrator/Documents/Ishtar/Web/Index.html#" class="event-action">Register</a>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <img class="sepik.jpg" src="C:\Users\260075\Desktop\Ishtar\Web\sepik.jpg" alt="Wewak Concert">
+                        <div class="event-content">
+                            <div class="event-title">Sepik River Sounds</div>
+                            <div class="event-date">November 8, 2027 | Wewak, PNG</div>
+                            <div class="event-desc">
+                                An immersive concert experience along the Sepik River, showcasing the diverse musical traditions of Papua New Guinea.
+                            </div>
+                            <a href="file:///C:/Users/Administrator/Documents/Ishtar/Web/Index.html#" class="event-action">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section style="max-width: 1000px; margin: 4rem auto; padding: 3rem; background: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--shadow);">
+                <h2 data-icon="📧">Contact Us</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
+                    <div>
+                        <h3 style="color: var(--primary); margin-top: 0; font-size: 1.3rem;">Get in Touch</h3>
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="font-weight: 600; color: var(--text); margin-bottom: 0.5rem;">Email</div>
+                            <a href="mailto:info@kodanaishtar.com" style="color: var(--primary); text-decoration: none; font-size: 1.05rem;">info@kodanaishtar.com</a>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="font-weight: 600; color: var(--text); margin-bottom: 0.5rem;">Phone</div>
+                            <a href="tel:+67582304929" style="color: var(--primary); text-decoration: none; font-size: 1.05rem;">+675 8230 4929</a>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="font-weight: 600; color: var(--text); margin-bottom: 0.5rem;">Address</div>
+                            <p style="margin: 0; color: var(--text); line-height: 1.6; font-size: 1rem;">Port Moresby<br>Papua New Guinea</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary); margin-top: 0; font-size: 1.3rem;">Follow Us</h3>
+                        <p style="color: var(--text); margin-bottom: 1.5rem;">Connect with us on social media for updates on upcoming events and special announcements.</p>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <a href="#" style="display: inline-block; width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: bold; font-size: 1.2rem;" title="Facebook">f</a>
+                            <a href="#" style="display: inline-block; width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: bold; font-size: 1.2rem;" title="Instagram">📷</a>
+                            <a href="#" style="display: inline-block; width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: bold; font-size: 1.2rem;" title="Twitter">𝕏</a>
+                            <a href="#" style="display: inline-block; width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: bold; font-size: 1.2rem;" title="LinkedIn">in</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </main>
+        <footer style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; box-shadow: var(--shadow); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.05); pointer-events: none;"></div>
+            <div style="max-width: 1000px; margin: 0 auto; position: relative; z-index: 1;">
+                <div style="font-size: 1.4rem; margin-bottom: 1rem; font-weight: 600;">Stay Connected</div>
+                <div style="font-size: 1.1rem; margin-bottom: 1rem; opacity: 0.9;">Contact us: <a href="mailto:info@kodanaishtar.com" style="color: #fff; text-decoration: underline; font-weight: 500;">info@kodanaishtar.com</a> | Phone: +675 8230 4929</div>
+                <div style="margin-bottom: 1rem;">© 2027 Local Events. All rights reserved.</div>
+                <div style="margin-bottom: 1rem;">
+                    
+                    <a href="file:///C:/Users/Administrator/Documents/Ishtar/Web/Index.html#" style="color: #fff; text-decoration: underline; margin: 0 0.5rem;">Privacy Policy</a> | 
+                    <a href="file:///C:/Users/Administrator/Documents/Ishtar/Web/Index.html#" style="color: #fff; text-decoration: underline; margin: 0 0.5rem;">Terms of Service</a>
+                </div>
+                <div style="font-size: 1rem; opacity: 0.8; font-style: italic;">Empowering communities through local concerts in PNG and contributing to national economic growth.</div>
+            </div>
+        </footer>
+
+</body></html>
